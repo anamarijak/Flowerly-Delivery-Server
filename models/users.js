@@ -9,19 +9,19 @@ const userSchema = new Schema({
         required: true
     },
     mass: {
-        type: mongoose.Schema.Types.Double,
+        type: String,
         default: undefined
     },
     volume: {
-        type: mongoose.Schema.Types.Double,
+        type: String,
         default: undefined
     },
     address: {
         type: String,
         default: undefined
     },
-    longitude: { type: mongoose.Schema.Types.Double },
-    latitude: { type: mongoose.Schema.Types.Double }
+    longitude: { type: mongoose.Schema.Types.Double},
+    latitude: { type: mongoose.Schema.Types.Double}
 },{
     timestamps: true
 });

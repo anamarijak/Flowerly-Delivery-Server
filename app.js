@@ -5,14 +5,11 @@ const createError = require('http-errors'),
     mongoose = require('mongoose'),
     cors = require('cors'),
     expressValidator = require('express-validator'),
-    passport = require('passport'),
-    indexRouter = require('./routes/index'),
-    userRouter = require('./routes/users');
-    //messageRouter = require('./routes/messages');
+    indexRouter = require('./routes/index');
 
 
 // Connect to database
-mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/dostava',
+mongoose.connect('mongodb://localhost:27017/dostava',
     { useNewUrlParser: true , useCreateIndex: true })
     .then(()=> { console.log("Connected to database!"); }) //notify if success
     .catch(err => {
@@ -27,7 +24,7 @@ app.use(cors());
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-/*app.use(expressValidator({
+app.use(expressValidator({
   errorFormatter: function(param, msg, value) {
     let namespace = param.split('.'),
         root = namespace.shift(),
@@ -41,12 +38,9 @@ app.use(bodyParser.urlencoded({ extended: false }));
       value: value
     };
   }
-}));*/
-app.use(passport.initialize());
-require('./config/passport')(passport);
+}));
 app.disable('etag');
 app.use('/', indexRouter);
-app.use('/users', passport.authenticate('jwt', { session: false }), userRouter);
 
 
 // catch 404 and forward to error handler
